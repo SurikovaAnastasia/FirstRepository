@@ -67,9 +67,9 @@
         <CheckBox Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" 
                   Content="Датчик дождя" FontSize="14" IsChecked="{Binding Rain}"></CheckBox>
         <CheckBox Grid.Column="3" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Left" 
-                  Content="Датчики парковки" FontSize="14" IsChecked="{Binding Parking}"></CheckBox>
+                  Content="Датчики парковки" FontSize="14" IsChecked="{Binding Parking}" Name="Parking"></CheckBox>
         <ComboBox Grid.Column="3" Grid.Row="6" Height="25" Width="200" HorizontalAlignment="Left"
-                  ItemsSource="{Binding ParkingList}" SelectedItem="{Binding SelectedPark}"></ComboBox>
+                  ItemsSource="{Binding ParkingList}" SelectedItem="{Binding SelectedPark}" IsEnabled="{Binding IsChecked, ElementName=Parking}"></ComboBox>
         <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" FontSize="18" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" FontStyle="Italic" Text="{Binding Price}"></TextBlock>
     </Grid>
