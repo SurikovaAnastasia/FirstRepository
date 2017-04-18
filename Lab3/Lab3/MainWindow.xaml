@@ -49,41 +49,42 @@
                    Margin="10, 0, 0 ,0">Привод</TextBlock>
         <TextBlock Grid.Column="0" Grid.Row="6" FontSize="14" VerticalAlignment="Center" 
                    Margin="10, 0, 0 ,0">Цвет</TextBlock>
-        <ComboBox Name="ModelBox" Grid.Column="1" Grid.Row="2" Margin="20, 8, 20, 8" SelectedIndex="0" Template="{StaticResource ResourceKey=PrettyComboBox}"
-                  ItemsSource="{Binding Model}" SelectedItem="{Binding SelectedModel}"/>
+        <ComboBox Name="ModelBox" Grid.Column="1" Grid.Row="2" Margin="20, 8, 20, 8" SelectedIndex="0"
+                  ItemsSource="{Binding Models}" SelectedItem="{Binding SelectedModel, Mode=TwoWay}"/>
         <ComboBox Grid.Column="1" Grid.Row="3" Margin="20, 8, 20, 8" SelectedIndex="0"
-                  ItemsSource="{Binding AmountMotor}" SelectedItem="{Binding SelectedAmount}"/>
+                  ItemsSource="{Binding EngineVolumes}" SelectedItem="{Binding SelectedEngineVolume}"/>
         <ComboBox Grid.Column="1" Grid.Row="4" Margin="20, 8, 20, 8" SelectedIndex="0"
-                  ItemsSource="{Binding Transmis}" SelectedItem="{Binding SelectedTransmis}"/>
+                  ItemsSource="{Binding Gears}" SelectedItem="{Binding SelectedGear}"/>
         <ComboBox Grid.Column="1" Grid.Row="5" Margin="20, 8, 20, 8" SelectedIndex="0"
-                  ItemsSource="{Binding DriveUnit}" SelectedItem="{Binding SelectedUnit}"/>
+                  ItemsSource="{Binding WheelDrives}" SelectedItem="{Binding SelectedWheelDrive}"/>
         <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Pink" 
-                         IsChecked="{Binding Pink}" Visibility="{Binding EnPink}"></RadioButton>
+                         IsChecked="{Binding Pink}" Visibility="{Binding VisibilityPink}"></RadioButton>
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Blue" 
-                         IsChecked="{Binding Blue}" Visibility="{Binding EnBlue}"></RadioButton>
+                         IsChecked="{Binding Blue}" Visibility="{Binding VisibilityBlue}"></RadioButton>
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Green" 
-                         IsChecked="{Binding Green}" Visibility="{Binding EnGreen}"></RadioButton>
+                         IsChecked="{Binding Green}" Visibility="{Binding VisibilityGreen}"></RadioButton>
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Black" 
-                         IsChecked="{Binding Black}" Visibility="{Binding EnBlack}"></RadioButton>
+                         IsChecked="{Binding Black}" Visibility="{Binding VisibilityBlack}"></RadioButton>
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Yellow" 
-                         IsChecked="{Binding Yellow}" Visibility="{Binding EnYellow}"></RadioButton>
+                         IsChecked="{Binding Yellow}" Visibility="{Binding VisibilityYellow}"></RadioButton>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Grid.Column="0" Grid.Row="7" Height="20" Width="50" Margin="0, 0, 20, 0">Отмена</Button>
             <Button Grid.Column="1" Grid.Row="7" Height="20" Width="50" Margin="20, 0, 0, 0">Расчет</Button>
         </StackPanel>
         <Rectangle Grid.Column="2" Grid.Row="1" Grid.RowSpan="6" Stroke="Black" StrokeThickness="2" Width="3"></Rectangle>
-        <CheckBox Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding ClEn}" 
-                  Content="Климат-контроль" FontSize="14" IsChecked="{Binding Clime}"></CheckBox>
-        <CheckBox Grid.Column="3" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding HeaEn}" 
-                  Content="Подогрев руля" FontSize="14" IsChecked="{Binding Heating}"></CheckBox>
-        <CheckBox Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding RaEn}" 
-                  Content="Датчик дождя" FontSize="14" IsChecked="{Binding Rain}"></CheckBox>
-        <CheckBox Grid.Column="3" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsEnabled="{Binding ParkEn}" 
-                  Content="Датчики парковки" FontSize="14" IsChecked="{Binding Parking}" x:Name="CheckPark"></CheckBox>
-        <ComboBox Grid.Column="3" Grid.Row="6" Height="25" Width="200" HorizontalAlignment="Left" IsEnabled="{Binding ElementName=CheckPark, Path=IsChecked}" 
-                  ItemsSource="{Binding ParkingList}" SelectedItem="{Binding SelectedPark}" SelectedIndex="0" Template="{StaticResource ResourceKey=PrettyComboBox}"/>
+        <CheckBox Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding EnabledClimateControl}" 
+                  Content="Климат-контроль" FontSize="14" IsChecked="{Binding HasClimateControl}"></CheckBox>
+        <CheckBox Grid.Column="3" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding EnabledHeatedWheel}" 
+                  Content="Подогрев руля" FontSize="14" IsChecked="{Binding HasHeatedWheel}"></CheckBox>
+        <CheckBox Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding EnabledRainSensor}" 
+                  Content="Датчик дождя" FontSize="14" IsChecked="{Binding HasRainSensor}"></CheckBox>
+        <CheckBox Grid.Column="3" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsEnabled="{Binding EnabledParkingSensor}" 
+                  Content="Датчики парковки" FontSize="14" IsChecked="{Binding HasParkingSensor}" x:Name="CheckedParkingSensor"></CheckBox>
+        <ComboBox Grid.Column="3" Grid.Row="6" Height="25" Width="200" HorizontalAlignment="Left" 
+                  IsEnabled="{Binding ElementName=CheckedParkingSensor, Path=IsChecked}" ItemsSource="{Binding ParkingSensorTypes}" 
+                  SelectedItem="{Binding SelectedParkingSensorType}" SelectedIndex="0"/>
         <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" FontSize="18" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" FontStyle="Italic" Text="{Binding Price}"></TextBlock>
     </Grid>

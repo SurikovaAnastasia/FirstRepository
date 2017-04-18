@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Lab3
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<String> Model { get; set; }
+        public ObservableCollection<String> Models { get; private set; }
         private String _sm;
         public String SelectedModel
         {
@@ -22,19 +23,46 @@ namespace Lab3
             {
                 _sm = value;
                 ListsItems();
-                SelectModel(Model, _sm);
-                DoPropertyChanged(_sm);
+                SelectModel(Models, _sm);
+                DoPropertyChanged(nameof(SelectedModel));
             }
         }
 
-        public ObservableCollection<String> AmountMotor { get; set; }
-        public String SelectedAmount { get; set; }
+        private ObservableCollection<string> _EngineVolumes;
+        public ObservableCollection<string> EngineVolumes
+        {
+            get { return _EngineVolumes; }
+            set
+            {
+                _EngineVolumes = value;
+                DoPropertyChanged(nameof(EngineVolumes));
+            }
+        }
+        public String SelectedEngineVolume { get; set; }
 
-        public ObservableCollection<String> Transmis { get; set; }
-        public String SelectedTransmis { get; set; }
+        private ObservableCollection<string> _Gears { get; set; }
+        public ObservableCollection<string> Gears
+        {
+            get { return _Gears; }
+            set
+            {
+                _Gears = value;
+                DoPropertyChanged(nameof(Gears));
+            }
+        }
+        public String SelectedGear { get; set; }
 
-        public ObservableCollection<String> DriveUnit { get; set; }
-        public String SelectedUnit { get; set; }
+        private ObservableCollection<string> _WheelDrives;
+        public ObservableCollection<string> WheelDrives
+        {
+            get { return _WheelDrives; }
+            set
+            {
+                _WheelDrives = value;
+                DoPropertyChanged(nameof(WheelDrives));
+            }
+        }
+        public String SelectedWheelDrive { get; set; }
 
         public Boolean Pink { get; set; }
         public Boolean Blue { get; set; }
@@ -42,34 +70,114 @@ namespace Lab3
         public Boolean Black { get; set; }
         public Boolean Yellow { get; set; }
 
-        public String EnPink { get; set; }
-        public String EnBlue { get; set; }
-        public String EnGreen { get; set; }
-        public String EnBlack { get; set; }
-        public String EnYellow { get; set; }
-
-        public Boolean Clime { get; set; }
-        public Boolean ClEn { get; set; }
-        public Boolean Heating { get; set; }
-        public Boolean HeaEn { get; set; }
-        public Boolean Rain { get; set; }
-        public Boolean RaEn { get; set; }
-
-        private Boolean _Park;
-        public Boolean ParkEn { get; set; }
-        public Boolean Parking
+        private String _VisibilityPink;
+        public String VisibilityPink
         {
-            get { return _Park; }
+            get { return _VisibilityPink; }
             set
             {
-                _Park = value;
-                DoPropertyChanged(_Park.ToString());
+                _VisibilityPink = value;
+                DoPropertyChanged(nameof(VisibilityPink));
             }
         }
-        public ObservableCollection<String> ParkingList { get; set; }
-        public String SelectedPark { get; set; }
+        private String _VisibilityBlue;
+        public String VisibilityBlue
+        {
+            get { return _VisibilityBlue; }
+            set
+            {
+                _VisibilityBlue = value;
+                DoPropertyChanged(nameof(VisibilityBlue));
+            }
+        }
+        private String _VisibilityGreen;
+        public String VisibilityGreen
+        {
+            get { return _VisibilityGreen; }
+            set
+            {
+                _VisibilityGreen = value;
+                DoPropertyChanged(nameof(VisibilityGreen));
+            }
+        }
+        private String _VisibilityBlack;
+        public String VisibilityBlack
+        {
+            get { return _VisibilityBlack; }
+            set
+            {
+                _VisibilityBlack = value;
+                DoPropertyChanged(nameof(VisibilityBlack));
+            }
+        }
+        private String _VisibilityYellow;
+        public String VisibilityYellow
+        {
+            get { return _VisibilityYellow; }
+            set
+            {
+                _VisibilityYellow = value;
+                DoPropertyChanged(nameof(VisibilityYellow));
+            }
+        }
 
-        public Double Price { get; set; }
+        public bool HasClimateControl { get; set; }
+        public bool HasHeatedWheel { get; set; }
+        public bool HasRainSensor { get; set; }
+        public bool HasParkingSensor { get; set; }
+
+        private bool _EnabledClimateControl;
+        public bool EnabledClimateControl
+        {
+            get { return _EnabledClimateControl; }
+            set
+            {
+                _EnabledClimateControl = value;
+                DoPropertyChanged(nameof(EnabledClimateControl));
+            }
+        }
+        private bool _EnabledHeatedWheel;
+        public bool EnabledHeatedWheel
+        {
+            get { return _EnabledHeatedWheel; }
+            set
+            {
+                _EnabledHeatedWheel = value;
+                DoPropertyChanged(nameof(EnabledHeatedWheel));
+            }
+        }
+        private bool _EnabledRainSensor;
+        public bool EnabledRainSensor
+        {
+            get { return _EnabledRainSensor; }
+            set
+            {
+                _EnabledRainSensor = value;
+                DoPropertyChanged(nameof(EnabledRainSensor));
+            }
+        }
+        private bool _EnabledParkingSensor;
+        public bool EnabledParkingSensor
+        {
+            get { return _EnabledParkingSensor; }
+            set
+            {
+                _EnabledParkingSensor = value;
+                DoPropertyChanged(nameof(EnabledParkingSensor));
+            }
+        }
+
+        private ObservableCollection<string> _ParkingSensorTypes;
+        public ObservableCollection<string> ParkingSensorTypes
+        {
+            get { return _ParkingSensorTypes; }
+            set
+            {
+                _ParkingSensorTypes = value;
+                DoPropertyChanged(nameof(ParkingSensorTypes));
+            }
+        }
+        public String SelectedParkingSensorType { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void DoPropertyChanged(String Name)
@@ -80,83 +188,88 @@ namespace Lab3
             }
         }
 
-        public void SelectModel(ObservableCollection<string> ModelList, string SelectedModel)
+        public int Price { get; private set; }
+
+        public void SelectModel(ObservableCollection<String> Models, string SelectedModel)
         {
             switch (SelectedModel)
             {
                 case "Accord":
-                    AmountMotor.Clear();
-                    AmountMotor.Add("Меньше 3.5 литров");
+                    EngineVolumes.Clear();
+                    EngineVolumes.Add("Меньше 3.5 литров");
                     Price += 900000;
-                    EnGreen = "Collapsed";
-                    EnYellow = "Collapsed";
+                    VisibilityGreen = "Collapsed";
+                    VisibilityYellow = "Collapsed";
                     break;
                 case "CR-X":
-                    DriveUnit.Clear();
-                    DriveUnit.Add("Задний");
-                    ClEn = false;
-                    ParkingList.Clear();
-                    ParkingList.Add("Только сзади");
+                    WheelDrives.Clear();
+                    WheelDrives.Add("Задний");
+                    EnabledClimateControl = false;
+                    ParkingSensorTypes.Clear();
+                    ParkingSensorTypes.Add("Только сзади");
                     Price += 950000;
-                    EnYellow = "Collapsed";
+                    VisibilityYellow = "Collapsed";
                     break;
                 case "Life":
-                    ClEn = false;
-                    HeaEn = false;
-                    RaEn = false;
-                    ParkEn = false;
-                    Parking = false;
+                    EnabledClimateControl = false;
+                    EnabledHeatedWheel = false;
+                    EnabledRainSensor = false;
+                    EnabledParkingSensor = false;
                     Price += 1000000;
-                    EnPink = "Collapsed";
-                    EnBlue = "Collapsed";
-                    EnGreen = "Collapsed";
-                    EnYellow = "Collapsed";
+                    VisibilityPink = "Collapsed";
+                    VisibilityBlue = "Collapsed";
+                    VisibilityGreen = "Collapsed";
+                    VisibilityYellow = "Collapsed";
                     break;
                 default:
-                    ClEn = false;
-                    HeaEn = false;
-                    RaEn = false;
-                    ParkEn = false;
-                    Parking = false;
-                    DriveUnit.Clear();
-                    DriveUnit.Add("Задний");
+                    EnabledClimateControl = false;
+                    EnabledHeatedWheel = false;
+                    EnabledRainSensor = false;
+                    EnabledParkingSensor = false;
+                    WheelDrives.Clear();
+                    WheelDrives.Add("Задний");
                     Price += 790000;
                     break;
             }
         }
         public void ListsItems()
         {
-            Model = new ObservableCollection<string>();
-            Model.Add("Accord");
-            Model.Add("CR-X");
-            Model.Add("Life");
-            Model.Add("S2000");
+            Models = new ObservableCollection<String>();
+            Models.Add("Accord");
+            Models.Add("CR-X");
+            Models.Add("Life");
+            Models.Add("S2000");
 
-            AmountMotor = new ObservableCollection<string>();
-            AmountMotor.Add("Меньше 3.5 литров");
-            AmountMotor.Add("Больше 3.5 литров");
+            EngineVolumes = new ObservableCollection<string>();
+            EngineVolumes.Add("Меньше 3.5 литров");
+            EngineVolumes.Add("Больше 3.5 литров");
 
-            Transmis = new ObservableCollection<string>();
-            Transmis.Add("Автоматическая");
+            Gears = new ObservableCollection<string>();
+            Gears.Add("Автоматическая");
 
-            DriveUnit = new ObservableCollection<string>();
-            DriveUnit.Add("Задний");
-            DriveUnit.Add("Передний");
+            WheelDrives = new ObservableCollection<string>();
+            WheelDrives.Add("Задний");
+            WheelDrives.Add("Передний");
 
-            ParkingList = new ObservableCollection<string>();
-            ParkingList.Add("Только сзади");
-            ParkingList.Add("И спереди и сзади");
+            ParkingSensorTypes = new ObservableCollection<string>();
+            ParkingSensorTypes.Add("Только сзади");
+            ParkingSensorTypes.Add("И спереди и сзади");
 
-            ClEn = true;
-            HeaEn = true;
-            RaEn = true;
-            ParkEn = true;
+            EnabledClimateControl = true;
+            EnabledHeatedWheel = true;
+            EnabledRainSensor = true;
+            EnabledParkingSensor = true;
 
-            EnPink = "Visible";
-            EnBlue = "Visible";
-            EnGreen = "Visible";
-            EnBlack = "Visible";
-            EnYellow = "Visible";
+            HasClimateControl = false;
+            HasHeatedWheel = false;
+            HasRainSensor = false;
+            HasParkingSensor = false;
+
+            VisibilityPink = "Visible";
+            VisibilityBlue = "Visible";
+            VisibilityGreen = "Visible";
+            VisibilityBlack = "Visible";
+            VisibilityYellow = "Visible";
         }
 
         public MainWindowViewModel()
