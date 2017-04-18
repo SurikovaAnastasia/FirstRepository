@@ -49,7 +49,7 @@
                    Margin="10, 0, 0 ,0">Привод</TextBlock>
         <TextBlock Grid.Column="0" Grid.Row="6" FontSize="14" VerticalAlignment="Center" 
                    Margin="10, 0, 0 ,0">Цвет</TextBlock>
-        <ComboBox Style="{StaticResource ComboStyle}" Grid.Column="1" Grid.Row="2" Margin="20, 8, 20, 8" SelectedIndex="0"
+        <ComboBox Name="ModelBox" Grid.Column="1" Grid.Row="2" Margin="20, 8, 20, 8" SelectedIndex="0" Template="{StaticResource ResourceKey=PrettyComboBox}"
                   ItemsSource="{Binding Model}" SelectedItem="{Binding SelectedModel}"/>
         <ComboBox Grid.Column="1" Grid.Row="3" Margin="20, 8, 20, 8" SelectedIndex="0"
                   ItemsSource="{Binding AmountMotor}" SelectedItem="{Binding SelectedAmount}"/>
@@ -59,15 +59,15 @@
                   ItemsSource="{Binding DriveUnit}" SelectedItem="{Binding SelectedUnit}"/>
         <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Pink" 
-                         IsChecked="{Binding Pink}"></RadioButton>
+                         IsChecked="{Binding Pink}" Visibility="{Binding EnPink}"></RadioButton>
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Blue" 
-                         IsChecked="{Binding Blue}"></RadioButton>
+                         IsChecked="{Binding Blue}" Visibility="{Binding EnBlue}"></RadioButton>
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Green" 
-                         IsChecked="{Binding Green}"></RadioButton>
+                         IsChecked="{Binding Green}" Visibility="{Binding EnGreen}"></RadioButton>
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Black" 
-                         IsChecked="{Binding Black}"></RadioButton>
+                         IsChecked="{Binding Black}" Visibility="{Binding EnBlack}"></RadioButton>
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Yellow" 
-                         IsChecked="{Binding Yellow}"></RadioButton>
+                         IsChecked="{Binding Yellow}" Visibility="{Binding EnYellow}"></RadioButton>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Grid.Column="0" Grid.Row="7" Height="20" Width="50" Margin="0, 0, 20, 0">Отмена</Button>
@@ -83,7 +83,7 @@
         <CheckBox Grid.Column="3" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsEnabled="{Binding ParkEn}" 
                   Content="Датчики парковки" FontSize="14" IsChecked="{Binding Parking}" x:Name="CheckPark"></CheckBox>
         <ComboBox Grid.Column="3" Grid.Row="6" Height="25" Width="200" HorizontalAlignment="Left" IsEnabled="{Binding ElementName=CheckPark, Path=IsChecked}" 
-                  ItemsSource="{Binding ParkingList}" SelectedItem="{Binding SelectedPark}" SelectedIndex="0"/>
+                  ItemsSource="{Binding ParkingList}" SelectedItem="{Binding SelectedPark}" SelectedIndex="0" Template="{StaticResource ResourceKey=PrettyComboBox}"/>
         <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" FontSize="18" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" FontStyle="Italic" Text="{Binding Price}"></TextBlock>
     </Grid>

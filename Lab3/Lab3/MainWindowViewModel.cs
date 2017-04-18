@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Lab3
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public List<String> Model { get; set; }
+        public ObservableCollection<String> Model { get; set; }
         private String _sm;
         public String SelectedModel
         {
@@ -21,18 +22,18 @@ namespace Lab3
             {
                 _sm = value;
                 ListsItems();
-                SelectModel(Model);
+                SelectModel(Model, _sm);
                 DoPropertyChanged(_sm);
             }
         }
 
-        public List<String> AmountMotor { get; set; }
+        public ObservableCollection<String> AmountMotor { get; set; }
         public String SelectedAmount { get; set; }
 
-        public List<String> Transmis { get; set; }
+        public ObservableCollection<String> Transmis { get; set; }
         public String SelectedTransmis { get; set; }
 
-        public List<String> DriveUnit { get; set; }
+        public ObservableCollection<String> DriveUnit { get; set; }
         public String SelectedUnit { get; set; }
 
         public Boolean Pink { get; set; }
@@ -40,6 +41,12 @@ namespace Lab3
         public Boolean Green { get; set; }
         public Boolean Black { get; set; }
         public Boolean Yellow { get; set; }
+
+        public String EnPink { get; set; }
+        public String EnBlue { get; set; }
+        public String EnGreen { get; set; }
+        public String EnBlack { get; set; }
+        public String EnYellow { get; set; }
 
         public Boolean Clime { get; set; }
         public Boolean ClEn { get; set; }
@@ -59,15 +66,10 @@ namespace Lab3
                 DoPropertyChanged(_Park.ToString());
             }
         }
-        public List<String> ParkingList { get; set; }
+        public ObservableCollection<String> ParkingList { get; set; }
         public String SelectedPark { get; set; }
 
-        private Double _price;
-        public Double Price
-        {
-            get { return _price; }
-            set { _price = value; }
-        }
+        public Double Price { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void DoPropertyChanged(String Name)
@@ -77,7 +79,8 @@ namespace Lab3
                 PropertyChanged(this, new PropertyChangedEventArgs(Name));
             }
         }
-        public void SelectModel(List<string> ModelList)
+
+        public void SelectModel(ObservableCollection<string> ModelList, string SelectedModel)
         {
             switch (SelectedModel)
             {
@@ -85,6 +88,8 @@ namespace Lab3
                     AmountMotor.Clear();
                     AmountMotor.Add("Меньше 3.5 литров");
                     Price += 900000;
+                    EnGreen = "Collapsed";
+                    EnYellow = "Collapsed";
                     break;
                 case "CR-X":
                     DriveUnit.Clear();
@@ -93,6 +98,7 @@ namespace Lab3
                     ParkingList.Clear();
                     ParkingList.Add("Только сзади");
                     Price += 950000;
+                    EnYellow = "Collapsed";
                     break;
                 case "Life":
                     ClEn = false;
@@ -101,6 +107,10 @@ namespace Lab3
                     ParkEn = false;
                     Parking = false;
                     Price += 1000000;
+                    EnPink = "Collapsed";
+                    EnBlue = "Collapsed";
+                    EnGreen = "Collapsed";
+                    EnYellow = "Collapsed";
                     break;
                 default:
                     ClEn = false;
@@ -116,24 +126,24 @@ namespace Lab3
         }
         public void ListsItems()
         {
-            Model = new List<string>();
+            Model = new ObservableCollection<string>();
             Model.Add("Accord");
             Model.Add("CR-X");
             Model.Add("Life");
             Model.Add("S2000");
 
-            AmountMotor = new List<string>();
+            AmountMotor = new ObservableCollection<string>();
             AmountMotor.Add("Меньше 3.5 литров");
             AmountMotor.Add("Больше 3.5 литров");
 
-            Transmis = new List<string>();
+            Transmis = new ObservableCollection<string>();
             Transmis.Add("Автоматическая");
 
-            DriveUnit = new List<string>();
+            DriveUnit = new ObservableCollection<string>();
             DriveUnit.Add("Задний");
             DriveUnit.Add("Передний");
 
-            ParkingList = new List<string>();
+            ParkingList = new ObservableCollection<string>();
             ParkingList.Add("Только сзади");
             ParkingList.Add("И спереди и сзади");
 
@@ -141,6 +151,12 @@ namespace Lab3
             HeaEn = true;
             RaEn = true;
             ParkEn = true;
+
+            EnPink = "Visible";
+            EnBlue = "Visible";
+            EnGreen = "Visible";
+            EnBlack = "Visible";
+            EnYellow = "Visible";
         }
 
         public MainWindowViewModel()

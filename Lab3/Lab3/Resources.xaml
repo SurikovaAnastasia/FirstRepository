@@ -30,4 +30,52 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+    <ControlTemplate x:Key="PrettyComboBox" TargetType="ComboBox">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Rectangle x:Name="ComboRec" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" Stroke="Black" StrokeThickness="2" Fill="White"/>
+            <TextBlock Text="{TemplateBinding SelectedItem}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <Ellipse x:Name="ComboCir" Grid.Column="1" Width="10" Height="10" Fill="Black"></Ellipse>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="ComboRec" Property="Stroke">
+                    <Setter.Value>
+                        <SolidColorBrush Color="Aqua"></SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter TargetName="ComboCir" Property="Fill">
+                    <Setter.Value>
+                        <SolidColorBrush Color="Aqua"></SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="ComboRec" Property="Stroke">
+                    <Setter.Value>
+                        <SolidColorBrush Color="LightGray"></SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter TargetName="ComboCir" Property="Fill">
+                    <Setter.Value>
+                        <SolidColorBrush Color="LightGray"></SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="HasItems" Value="false">
+                <Setter TargetName="ComboRec" Property="Width" Value="95"/>
+            </Trigger>
+            <Trigger Property="IsGrouping" Value="true">
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+            </Trigger>
+            <Trigger Property="IsEditable" Value="true">
+                <Setter Property="IsTabStop" Value="false"/>
+                <Setter TargetName="ComboRec" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="ComboCir" Property="Visibility" Value="Hidden"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 </ResourceDictionary>
