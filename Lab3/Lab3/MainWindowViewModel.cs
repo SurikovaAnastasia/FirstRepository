@@ -14,16 +14,36 @@ namespace Lab3
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<String> Models { get; private set; }
-        private String _sm;
+        public Int32 PriceAccord = 900000;
+        public Int32 PriceCRX = 900000;
+        public Int32 PriceLife = 900000;
+        public Int32 PriceS2000 = 900000;
+
+        public Int32 PriceMinVolumes = 30000;
+        public Int32 PriceMaxVolumes = 60000;
+
+        public Int32 PriceGear = 20000;
+
+        public Int32 PriceWheelTop = 300000;
+        public Int32 PriceWheelBottom = 400000;
+
+        public Int32 PriceClimateControl = 10000;
+        public Int32 PriceHeatedWheel = 9000;
+        public Int32 PriceRainSensor = 12500;
+
+        public Int32 PriceParkingSensorBottom = 3000;
+        public Int32 PriceParkingSensorTopBottom = 9000;
+
+        public ObservableCollection<string> Models { get; private set; }
+        private String _SelectedModel;
         public String SelectedModel
         {
-            get { return _sm; }
+            get { return _SelectedModel; }
             set
             {
-                _sm = value;
+                _SelectedModel = value;
                 ListsItems();
-                SelectModel(Models, _sm);
+                SelectModel(Models, _SelectedModel);
                 DoPropertyChanged(nameof(SelectedModel));
             }
         }
@@ -121,10 +141,51 @@ namespace Lab3
             }
         }
 
-        public bool HasClimateControl { get; set; }
-        public bool HasHeatedWheel { get; set; }
-        public bool HasRainSensor { get; set; }
-        public bool HasParkingSensor { get; set; }
+        public Int32 Price { get; set; }
+
+        public ICommand Calculate { get; set; }       
+        public ICommand Cancel { get; set; }
+
+        private bool _HasClimateControl;
+        public bool HasClimateControl
+        {
+            get { return _HasClimateControl; }
+            set
+            {
+                _HasClimateControl = value;
+                DoPropertyChanged(nameof(HasClimateControl));
+            }
+        }
+        private bool _HasHeatedWheel;
+        public bool HasHeatedWheel
+        {
+            get { return _HasHeatedWheel; }
+            set
+            {
+                _HasHeatedWheel = value;
+                DoPropertyChanged(nameof(HasHeatedWheel));
+            }
+        }
+        private bool _HasRainSensor;
+        public bool HasRainSensor
+        {
+            get { return _HasRainSensor; }
+            set
+            {
+                _HasRainSensor = value;
+                DoPropertyChanged(nameof(HasRainSensor));
+            }
+        }
+        private bool _HasParkingSensor;
+        public bool HasParkingSensor
+        {
+            get { return _HasParkingSensor; }
+            set
+            {
+                _HasParkingSensor = value;
+                DoPropertyChanged(nameof(HasParkingSensor));
+            }
+        }
 
         private bool _EnabledClimateControl;
         public bool EnabledClimateControl
@@ -188,8 +249,6 @@ namespace Lab3
             }
         }
 
-        public int Price { get; private set; }
-
         public void SelectModel(ObservableCollection<String> Models, string SelectedModel)
         {
             switch (SelectedModel)
@@ -197,7 +256,6 @@ namespace Lab3
                 case "Accord":
                     EngineVolumes.Clear();
                     EngineVolumes.Add("Меньше 3.5 литров");
-                    Price += 900000;
                     VisibilityGreen = "Collapsed";
                     VisibilityYellow = "Collapsed";
                     break;
@@ -207,7 +265,6 @@ namespace Lab3
                     EnabledClimateControl = false;
                     ParkingSensorTypes.Clear();
                     ParkingSensorTypes.Add("Только сзади");
-                    Price += 950000;
                     VisibilityYellow = "Collapsed";
                     break;
                 case "Life":
@@ -215,7 +272,6 @@ namespace Lab3
                     EnabledHeatedWheel = false;
                     EnabledRainSensor = false;
                     EnabledParkingSensor = false;
-                    Price += 1000000;
                     VisibilityPink = "Collapsed";
                     VisibilityBlue = "Collapsed";
                     VisibilityGreen = "Collapsed";
@@ -228,7 +284,6 @@ namespace Lab3
                     EnabledParkingSensor = false;
                     WheelDrives.Clear();
                     WheelDrives.Add("Задний");
-                    Price += 790000;
                     break;
             }
         }
@@ -255,21 +310,24 @@ namespace Lab3
             ParkingSensorTypes.Add("Только сзади");
             ParkingSensorTypes.Add("И спереди и сзади");
 
-            EnabledClimateControl = true;
-            EnabledHeatedWheel = true;
-            EnabledRainSensor = true;
-            EnabledParkingSensor = true;
-
             HasClimateControl = false;
             HasHeatedWheel = false;
             HasRainSensor = false;
             HasParkingSensor = false;
+
+            EnabledClimateControl = true;
+            EnabledHeatedWheel = true;
+            EnabledRainSensor = true;
+            EnabledParkingSensor = true;
 
             VisibilityPink = "Visible";
             VisibilityBlue = "Visible";
             VisibilityGreen = "Visible";
             VisibilityBlack = "Visible";
             VisibilityYellow = "Visible";
+
+            Price = 0;
+            Pink = true;
         }
 
         public MainWindowViewModel()

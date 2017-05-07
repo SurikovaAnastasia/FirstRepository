@@ -5,17 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab3"
         mc:Ignorable="d"
-        Title="Lab3" Height="380" Width="600" MinHeight="380" MinWidth="600" MaxHeight="380" MaxWidth="600">
+        Title="Lab3" Height="380" Width="600" MinHeight="380" MinWidth="600" MaxHeight="380" MaxWidth="600"
+        Icon="/Resources/icon.jpg">
     <Window.DataContext>
         <local:MainWindowViewModel></local:MainWindowViewModel>
     </Window.DataContext>
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources.xaml" />
+                <ResourceDictionary Source="Resources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="Resources/car.jpg"/>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"></RowDefinition>
@@ -31,7 +35,7 @@
             <ColumnDefinition Width="130"></ColumnDefinition>
             <ColumnDefinition Width="0.9*"></ColumnDefinition>
             <ColumnDefinition Width="0.1*"></ColumnDefinition>
-            <ColumnDefinition Width="220"></ColumnDefinition>
+            <ColumnDefinition Width="0.9*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" FontSize="36" 
                    HorizontalAlignment="Center">Конфигурация автомобиля</TextBlock>
@@ -49,16 +53,16 @@
                    Margin="10, 0, 0 ,0">Привод</TextBlock>
         <TextBlock Grid.Column="0" Grid.Row="6" FontSize="14" VerticalAlignment="Center" 
                    Margin="10, 0, 0 ,0">Цвет</TextBlock>
-        <ComboBox Name="ModelBox" Grid.Column="1" Grid.Row="2" Margin="20, 8, 20, 8" SelectedIndex="0"
-                  ItemsSource="{Binding Models}" SelectedItem="{Binding SelectedModel, Mode=TwoWay}"/>
-        <ComboBox Grid.Column="1" Grid.Row="3" Margin="20, 8, 20, 8" SelectedIndex="0"
+        <ComboBox Name="ModelBox" Grid.Column="1" Grid.Row="2" Margin="20, 8, 20, 8" SelectedIndex="0" SelectedItem="{Binding SelectedModel, Mode=TwoWay}"
+                  Template="{StaticResource ResourceKey=PrettyComboBox}" ItemsSource="{Binding Models}" />
+        <ComboBox Grid.Column="1" Grid.Row="3" Margin="20, 8, 20, 8" SelectedIndex="0" Template="{StaticResource ResourceKey=PrettyComboBox}"
                   ItemsSource="{Binding EngineVolumes}" SelectedItem="{Binding SelectedEngineVolume}"/>
-        <ComboBox Grid.Column="1" Grid.Row="4" Margin="20, 8, 20, 8" SelectedIndex="0"
+        <ComboBox Grid.Column="1" Grid.Row="4" Margin="20, 8, 20, 8" SelectedIndex="0" Template="{StaticResource ResourceKey=PrettyComboBox}"
                   ItemsSource="{Binding Gears}" SelectedItem="{Binding SelectedGear}"/>
-        <ComboBox Grid.Column="1" Grid.Row="5" Margin="20, 8, 20, 8" SelectedIndex="0"
+        <ComboBox Grid.Column="1" Grid.Row="5" Margin="20, 8, 20, 8" SelectedIndex="0" Template="{StaticResource ResourceKey=PrettyComboBox}"
                   ItemsSource="{Binding WheelDrives}" SelectedItem="{Binding SelectedWheelDrive}"/>
         <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
-            <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Pink" 
+            <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Pink"
                          IsChecked="{Binding Pink}" Visibility="{Binding VisibilityPink}"></RadioButton>
             <RadioButton Margin="18,3,0,0" Template="{StaticResource ResourceKey=ColorRadio}" Background="Blue" 
                          IsChecked="{Binding Blue}" Visibility="{Binding VisibilityBlue}"></RadioButton>
@@ -70,8 +74,8 @@
                          IsChecked="{Binding Yellow}" Visibility="{Binding VisibilityYellow}"></RadioButton>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Grid.Column="0" Grid.Row="7" Height="20" Width="50" Margin="0, 0, 20, 0">Отмена</Button>
-            <Button Grid.Column="1" Grid.Row="7" Height="20" Width="50" Margin="20, 0, 0, 0">Расчет</Button>
+            <Button Grid.Column="0" Grid.Row="7" Height="20" Width="50" Margin="0, 0, 20, 0" Background="White" Command="{Binding Path=Cancel}">Отмена</Button>
+            <Button Grid.Column="1" Grid.Row="7" Height="20" Width="50" Margin="20, 0, 0, 0" Background="White" Command="{Binding Path=Calculate}">Расчет</Button>
         </StackPanel>
         <Rectangle Grid.Column="2" Grid.Row="1" Grid.RowSpan="6" Stroke="Black" StrokeThickness="2" Width="3"></Rectangle>
         <CheckBox Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding EnabledClimateControl}" 
@@ -82,9 +86,9 @@
                   Content="Датчик дождя" FontSize="14" IsChecked="{Binding HasRainSensor}"></CheckBox>
         <CheckBox Grid.Column="3" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Left" IsEnabled="{Binding EnabledParkingSensor}" 
                   Content="Датчики парковки" FontSize="14" IsChecked="{Binding HasParkingSensor}" x:Name="CheckedParkingSensor"></CheckBox>
-        <ComboBox Grid.Column="3" Grid.Row="6" Height="25" Width="200" HorizontalAlignment="Left" 
+        <ComboBox Grid.Column="3" Grid.Row="6" Margin="20, 8, 20, 8"
                   IsEnabled="{Binding ElementName=CheckedParkingSensor, Path=IsChecked}" ItemsSource="{Binding ParkingSensorTypes}" 
-                  SelectedItem="{Binding SelectedParkingSensorType}" SelectedIndex="0"/>
+                  SelectedItem="{Binding SelectedParkingSensorType}" Template="{StaticResource ResourceKey=PrettyComboBox}" SelectedIndex="0"/>
         <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" FontSize="18" VerticalAlignment="Center" 
                    HorizontalAlignment="Left" FontStyle="Italic" Text="{Binding Price}"></TextBlock>
     </Grid>
