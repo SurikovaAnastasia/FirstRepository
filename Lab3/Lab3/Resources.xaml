@@ -19,7 +19,7 @@
                         <ScaleTransform ScaleX = "0.8" ScaleY = "0.8" CenterX = "0" CenterY = "0"/>
                     </Setter.Value>
                 </Setter>
-                <Setter Property = "RenderTransformOrigin" Value = "0.5,0.5" />
+                <Setter Property = "RenderTransformOrigin" Value = "0.5,0.5"/>
             </Trigger>
             <Trigger Property = "IsChecked" Value = "True">
                 <Setter Property = "RenderTransform">
@@ -33,7 +33,8 @@
     </ControlTemplate>
     <ControlTemplate x:Key="PrettyComboBox" TargetType="ComboBox">
         <Grid>
-            <ToggleButton Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" >
+            <ToggleButton Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,
+                RelativeSource={RelativeSource TemplatedParent}}" >
                 <ToggleButton.Template>
                     <ControlTemplate>
                         <Grid>
@@ -41,7 +42,8 @@
                                 <ColumnDefinition Width="5*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle x:Name="ComboRec" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" Stroke="Black" StrokeThickness="2" Fill="White"/>
+                            <Rectangle x:Name="ComboRec" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" 
+                                       Stroke="Black" StrokeThickness="2" Fill="White"/>
                             <Ellipse x:Name="ComboCir" Grid.Column="1" Width="10" Height="10" Fill="Black"></Ellipse>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -85,11 +87,15 @@
                     </ControlTemplate>
                 </ToggleButton.Template>
             </ToggleButton>
-            <ContentPresenter Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="3" />
+            <ContentPresenter Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" 
+                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
+                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="3" />
             <TextBox x:Name="PART_EditableTextBox" Visibility="Hidden" IsReadOnly="{TemplateBinding IsReadOnly}" HorizontalAlignment="Center"/>
-            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
-                <Grid Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                    <Border x:Name="DropDownBorder" Background="LightGray" />
+            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" 
+                   Focusable="False" PopupAnimation="Slide">
+                <Grid Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" 
+                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                    <Border x:Name="DropDownBorder" Background="LightGray"/>
                     <ScrollViewer SnapsToDevicePixels="True">
                         <StackPanel IsItemsHost="True"/>
                     </ScrollViewer>

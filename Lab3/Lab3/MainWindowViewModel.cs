@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -14,27 +15,7 @@ namespace Lab3
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public Int32 PriceAccord = 900000;
-        public Int32 PriceCRX = 900000;
-        public Int32 PriceLife = 900000;
-        public Int32 PriceS2000 = 900000;
-
-        public Int32 PriceMinVolumes = 30000;
-        public Int32 PriceMaxVolumes = 60000;
-
-        public Int32 PriceGear = 20000;
-
-        public Int32 PriceWheelTop = 300000;
-        public Int32 PriceWheelBottom = 400000;
-
-        public Int32 PriceClimateControl = 10000;
-        public Int32 PriceHeatedWheel = 9000;
-        public Int32 PriceRainSensor = 12500;
-
-        public Int32 PriceParkingSensorBottom = 3000;
-        public Int32 PriceParkingSensorTopBottom = 9000;
-
-        public ObservableCollection<string> Models { get; private set; }
+        public static ObservableCollection<string> Models { get; set; }
         private String _SelectedModel;
         public String SelectedModel
         {
@@ -143,7 +124,44 @@ namespace Lab3
 
         public Int32 Price { get; set; }
 
-        public ICommand Calculate { get; set; }       
+        public string SelectedColor(bool Pink, bool Blue, bool Green, bool Black, bool Yellow)
+        {
+            if (Pink == true)
+                return "Розовый";
+            else if (Blue == true)
+                return "Синий";
+            else if (Green == true)
+                return "Зеленый";
+            else if (Black == true)
+                return "Черный";
+            else if (Yellow == true)
+                return "Желтый";
+            else return null;
+        }
+
+        public static void PushLine(string Model, string EngineVolume, string Gear, string WheelDrive, string Color, bool HasClimateControl, bool HasHeatedWheel, bool HasRainSensor, bool HasParkingSensor, string ParkingSensorType)
+        {
+            using (SqlConnection cn = new SqlConnection("Server = LAPTOP-6TBSUTCB; Database = carconfig; Trusted_Connection = True;"))
+            {
+                cn.Open();
+                string sql = string.Format("USE carconfig INSERT INTO dbo.Laba VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}', '{8}', '{9}')", Model, EngineVolume, Gear, WheelDrive, Color, HasClimateControl, HasHeatedWheel, HasRainSensor, HasParkingSensor, ParkingSensorType);
+                SqlCommand cmd = new SqlCommand(sql, cn);
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+        }
+
+        private bool _CanExecute;
+        private ICommand _Calculate;
+        public ICommand Calculate
+        {
+            get
+            {
+                string Color = SelectedColor(Pink, Blue, Green, Black, Yellow);
+                return _Calculate ?? (_Calculate = new CommandHandler(() => PushLine(SelectedModel, SelectedEngineVolume, SelectedGear, SelectedWheelDrive, Color, HasClimateControl, HasHeatedWheel, HasRainSensor, HasParkingSensor, SelectedParkingSensorType), _CanExecute));
+
+            }
+        }    
         public ICommand Cancel { get; set; }
 
         private bool _HasClimateControl;
@@ -333,6 +351,30 @@ namespace Lab3
         public MainWindowViewModel()
         {
             ListsItems();
+            _CanExecute = true;
         }
+    }
+    public class CommandHandler : ICommand
+    {
+        private Action _action;
+        private bool _canExecute;
+        public CommandHandler(Action action, bool canExecute)
+        {
+            _action = action;
+            _canExecute = canExecute;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute;
+        }
+
+        public event EventHandler CanExecuteChanged;
+
+        public void Execute(object parameter)
+        {
+            _action();
+        }
+
     }
 }
